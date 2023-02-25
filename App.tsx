@@ -25,6 +25,25 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import styled from 'styled-components/native';
+
+const Container = styled.View`
+  flex: 1;
+  background-color: #fff;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Title = styled.Text`
+  font-size: 20px;
+  color: #000;
+`;
+
+const Description = styled.Text`
+  font-size: 14px;
+  color: #000;
+`;
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -72,6 +91,10 @@ function App(): JSX.Element {
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <Header />
+        <Container>
+          <Title>React Native Boilerplate</Title>
+          <Description>React native boilerplate</Description>
+        </Container>
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
