@@ -286,3 +286,173 @@ yarn prestorybook
 When storybook is lauched on ios and/or android you can see the storybook UI on your browser at http://localhost:7007.
 This UI is very useful to see all the stories and to test them.
 Each change you make in the UI will be reflected in both app, selecting a story, changing some props...
+
+## 4. React Native Testing Library
+
+### Install
+
+```bash
+yarn add -D @testing-library/react-native @testing-library/jest-native @testing-library/jest-dom
+```
+
+Edit tsconfig.json
+
+```json
+{
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      (...)
+      "@types/jest" // add this line
+      "@testing-library/jest-dom" // add this line
+      ]
+  }
+}
+
+```
+
+Create file setupTests.js at the root of the project
+
+```js
+import '@testing-library/jest-native/extend-expect';
+```
+
+Create jest.config.js
+
+```js
+module.exports = {
+  preset: 'react-native',
+  setupFilesAfterEnv: [
+    '@testing-library/jest-native/extend-expect',
+    '<rootDir>/setupTests.js',
+  ],
+};
+```
+
+Edit package.json
+
+```json
+{
+  "scripts": {
+    (...)
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  }
+}
+```
+
+Edit tsconfig.json
+
+```json
+{
+  (...)
+  "compilerOptions": {
+    "types": [
+      (...)
+      "@types/jest" // add this line
+      "@testing-library/jest-dom" // add this line
+      ]
+  }
+}
+
+```
+
+### Create a test
+
+Create a file Button.tests.tsx in ./src/components/\_\_tests\_\_/ directory
+
+```js
+// ./src/components/__tests__/Button.test.tsx
+
+import React from 'react';
+
+import {render, fireEvent} from '@testing-library/react-native';
+
+import Button from '../Button';
+
+describe('<Button />', () => {
+  it('should render correctly with right text', () => {
+    const {getByText} = render(
+      <Button label="Button label" onPress={() => console.log('pressed')} />,
+    );
+
+    const button = getByText('Button label');
+
+    expect(button).toBeTruthy();
+  });
+
+  it('should call onPress when pressed', () => {
+    const onPress = jest.fn();
+    const {getByTestId} = render(
+      <Button label="Button label" onPress={onPress} />,
+    );
+
+    fireEvent.press(getByTestId('button'));
+
+    expect(onPress).toHaveBeenCalled();
+  });
+
+  it('should render correctly with fill', () => {
+    const {getByTestId} = render(
+      <Button
+        label="Button label"
+        onPress={() => console.log('pressed')}
+        fill
+      />,
+    );
+
+    const button = getByTestId('button');
+
+    expect(button.props.style.flex).toEqual(1);
+  });
+
+  it('should display the correct text color', () => {
+    const {getByText} = render(
+      <Button
+        label="Button label"
+        onPress={() => console.log('pressed')}
+        textColor="red"
+      />,
+    );
+
+    const text = getByText('Button label');
+
+    expect(text.props.style.color).toEqual('red');
+  });
+
+  it('should display the correct background color', () => {
+    const {getByTestId} = render(
+      <Button
+        label="Button label"
+        onPress={() => console.log('pressed')}
+        backgroundColor="#95C4CB"
+        style={{}}
+      />,
+    );
+
+    const button = getByTestId('button');
+
+    expect(button.children[0].props.style.backgroundColor).toEqual('#95C4CB');
+  });
+
+  it('should add the correct style', () => {
+    const {getByTestId} = render(
+      <Button
+        label="Button label"
+        onPress={() => console.log('pressed')}
+        backgroundColor="#95C4CB"
+        style={{
+          borderWidth: 1,
+          borderColor: 'red',
+        }}
+      />,
+    );
+
+    const button = getByTestId('button');
+
+    expect(button.children[0].props.style.borderWidth).toEqual(1);
+    expect(button.children[0].props.style.borderColor).toEqual('red');
+  });
+});
+```

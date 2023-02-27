@@ -11,14 +11,22 @@ const Button = ({
   backgroundColor = '#95C4CB',
   fill = false,
   ...rest
+}: {
+  label: string;
+  onPress: () => void;
+  style?: object;
+  textColor?: string;
+  backgroundColor?: string;
+  fill?: boolean;
 }) => (
   <TouchableOpacity
     {...rest}
     onPress={onPress}
     activeOpacity={0.75}
-    style={fill ? {flex: 1} : {}}>
-    <View style={[s.wrapper, {backgroundColor}, style]}>
-      <Text style={[s.label, {color: textColor}]}>{label}</Text>
+    style={fill ? {flex: 1} : {}}
+    testID="button">
+    <View style={{...s.wrapper, ...{backgroundColor}, ...style}}>
+      <Text style={{...s.label, ...{color: textColor}}}>{label}</Text>
     </View>
   </TouchableOpacity>
 );

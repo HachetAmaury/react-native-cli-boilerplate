@@ -8,6 +8,8 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "storybook": "start-storybook -p 7007",
     "build-storybook": "build-storybook",
     "prestorybook": "rnstl"
@@ -39,6 +41,9 @@
     "@storybook/addon-ondevice-knobs": "^5.3.26",
     "@storybook/react-native": "^5.3.27",
     "@storybook/react-native-server": "^5.3.23",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/jest-native": "^5.4.2",
+    "@testing-library/react-native": "^12.0.0-rc.0",
     "@tsconfig/react-native": "^2.0.2",
     "@types/jest": "^29.2.1",
     "@types/react": "^18.0.24",
@@ -54,8 +59,5 @@
     "react-native-storybook-loader": "^2.0.5",
     "react-test-renderer": "18.2.0",
     "typescript": "4.8.4"
-  },
-  "jest": {
-    "preset": "react-native"
   }
 }
