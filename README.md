@@ -2,6 +2,81 @@
 
 A boilerplate for react-native-cli projects.
 
+# Get it running
+
+## 1. Clone the repo
+
+```bash
+ git clone https://github.com/HachetAmaury/react-native-cli-boilerplate.git <your-project-name>
+```
+
+```bash
+cd <your-project-name>
+```
+
+## 2. Install dependencies
+
+```bash
+yarn install
+```
+
+## 3. Install ios dependencies
+
+```bash
+cd ios
+bundle install
+pod install
+```
+
+# To develop a new component
+
+## 1. Create a new folder in src/components
+
+## 2. Create a new file with the name of your component
+
+## 3. Create a new file with the name of your component + .stories.tsx
+
+## 4. Run the storybook server
+
+```bash
+yarn storybook
+```
+
+## 5. Run the app on ios or android
+
+Make sure that storybook is added inside the app
+
+```js
+// index.js
+
+let RegisteredApp = App;
+RegisteredApp = __DEV__ ? require('./storybook').default : App;
+```
+
+Then run the app
+
+```bash
+yarn ios
+```
+
+```bash
+yarn android
+```
+
+Browse to http://localhost:7007 to see your component in the app
+
+## 5. Create a new file with the name of your component + .test.tsx
+
+## 6. Run the tests
+
+```bash
+yarn test:watch
+```
+
+Start developping your component in TDD testing the component with jest and storybook without having to run the app.
+
+# Detailed installation process
+
 ## Getting Started
 
 ## 1. React Native & Typescript
